@@ -32,3 +32,23 @@ jobs:
         with:
           name: allure-results
           path: allure-results
+
+      - name: Install Java
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y default-jre
+
+      - name: Install Allure
+        run: |
+          wget https://github.com/allure-framework/allure2/releases/download/2.34.1/allure-2.34.1.tgz
+          tar -xzf allure-2.34.1.tgz
+
+      - name: Generate HTML Report
+        run: |
+          ./allure-2.34.1/bin/allure generate allure-results -o allure-report --clean
+
+      - name: Upload HTML Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report
