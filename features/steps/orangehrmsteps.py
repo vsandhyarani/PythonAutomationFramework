@@ -1,11 +1,17 @@
 from behave import *
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 import time
 
 @given('launch chrome browser')
 def launchbrowser(context):
-    context.driver = webdriver.Chrome()
+    chrome_options = Options()
+    chrome_options.add_argument("--headless=new")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--window-size=1920,1080")
+    context.driver = webdriver.Chrome(options=chrome_options)
     context.driver.maximize_window()
     time.sleep(5)
 
