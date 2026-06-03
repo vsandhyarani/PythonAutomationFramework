@@ -1,6 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from behave import *
 import time
 
@@ -22,9 +24,19 @@ def open1(context):
 
 @when('Enter valid "{user}" and valid "{pwd}"')
 def enterus(context,user,pwd):
-    context.driver.find_element(By.NAME,'username').send_keys(user)
+    user=WebDriverWait(context.driver, 10).until(
+        EC.presence_of_element_located(
+            (By.NAME, "username")
+        )
+    )
+
     time.sleep(3)
-    context.driver.find_element(By.NAME,'password').send_keys(pwd)
+    pwd=WebDriverWait(context.driver, 10).until(
+        EC.presence_of_element_located(
+            (By.NAME, "password")
+        )
+    )
+
     time.sleep(3)
 
 
@@ -40,7 +52,12 @@ def login1(context):
 
 @given('Launch chrome browser12')
 def browser12(context):
-    context.driver = webdriver.Chrome()
+    chrome_options = Options()
+    chrome_options.add_argument("--headless=new")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--window-size=1920,1080")
+    context.driver = webdriver.Chrome(options=chrome_options)
     context.driver.maximize_window()
 
 

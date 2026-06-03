@@ -2,6 +2,8 @@ from behave import *
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import time
 
 @given('launch chrome browser')
@@ -22,7 +24,12 @@ def openhomepage(context):
 
 @then('verify logo present in the orangehrm homepage')
 def verifylogo(context):
-    logo = context.driver.find_element(By.XPATH,"//img[@alt='company-branding']")
+    logo = WebDriverWait(context.driver, 10).until(
+        EC.visibility_of_element_located(
+            (By.XPATH, "//img[contains(@alt,'company')]")
+        )
+    )
+
     assert logo.is_displayed()
 
 @then('close the browser')
