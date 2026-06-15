@@ -27,10 +27,26 @@ def move_cursor(context):
     context.act.move_to_element(scrolling).perform()
     time.sleep(5)
 
-
-
 @then('Verify cursor is scrolled')
 def verify_cursor(context):
      print("Verify cursor is scrolled")
-     time.sleep(3)
      context.driver.close()
+
+
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    

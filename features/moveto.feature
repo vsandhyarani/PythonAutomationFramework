@@ -4,3 +4,4 @@ Feature: scroll to master in selenium
     When Open the automation test practice
     And Move cursor to master in selenium
     Then Verify cursor is scrolled
+
